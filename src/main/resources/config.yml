@@ -1,4 +1,4 @@
-craftcoinish:
+monacoinish:
   # Tax rate in percent
   tax: 5.0
   # Tax sales or withdrawals?
@@ -6,13 +6,13 @@ craftcoinish:
   # Whether or not the buyer will pay the sales tax (only used if 'sales-tax' is enabled)
   is-buyer-responsible: true
   # Username of the owner (All taxes go to this player)
-  owner: meta1203
+  owner: owner_name
   # Value of single Bitcoin
-  multiplier: 4.0
+  multiplier: 1.0
   # Name of the in-game currency
-  currency-name: 'CRC'
-craftcoin:
-  # How much in-game currency is require to withdraw to craftcoin.
+  currency-name: 'MONA'
+monacoin:
+  # How much in-game currency is require to withdraw to monacoin.
   min-withdraw: 0
   # Transaction Confirmations required for crediting player?
   confirms: 2
@@ -25,5 +25,5 @@ self-check:
   startup: false
 auctions:
   #How many days you want the auction to last before finding winner.
-  days: 2
+  days: 1
   

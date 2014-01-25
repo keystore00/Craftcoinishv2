@@ -1,15 +1,15 @@
-package me.meta1203.plugins.craftcoin.database;
+package me.meta1203.plugins.monacoin.database;
 
-import me.meta1203.plugins.craftcoin.AccountEntry;
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import me.meta1203.plugins.craftcoin.Util;
+import me.meta1203.plugins.monacoin.AccountEntry;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import me.meta1203.plugins.monacoin.Util;
 
 import org.bukkit.ChatColor;
 
 public class DatabaseScanner {
-	private Craftcoinish plugin;
+	private Monacoinish plugin;
 	
-	public DatabaseScanner(Craftcoinish plugin) {
+	public DatabaseScanner(Monacoinish plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -22,8 +22,8 @@ public class DatabaseScanner {
 	}
 	
 	public DatabaseLevel getLevel(double scanned) {
-		double valueReal = Util.getBitcoin(Craftcoinish.bapi.getWallet().getBalance());
-		double valueGame = scanned/Craftcoinish.mult;
+		double valueReal = Util.getBitcoin(Monacoinish.bapi.getWallet().getBalance());
+		double valueGame = scanned/Monacoinish.mult;
 		
 		if (valueReal > valueGame) {
 			return DatabaseLevel.UNDER;
@@ -37,8 +37,8 @@ public class DatabaseScanner {
 	}
 	
 	public double getOffset(double scanned) {
-		double valueReal = Util.getBitcoin(Craftcoinish.bapi.getWallet().getBalance());
-		double valueGame = scanned/Craftcoinish.mult;
+		double valueReal = Util.getBitcoin(Monacoinish.bapi.getWallet().getBalance());
+		double valueGame = scanned/Monacoinish.mult;
 		return valueGame - valueReal;
 	}
 	
@@ -56,7 +56,7 @@ public class DatabaseScanner {
 					"Total economy reset is recommended!";
 			break;
 		case UNDER:
-			info += "More Bitcoin than " + Craftcoinish.currencyName + " exists!\n";
+			info += "More Bitcoin than " + Monacoinish.currencyName + " exists!\n";
 			break;
 		case WARNING:
 			info += "System overdrawn!\n" +

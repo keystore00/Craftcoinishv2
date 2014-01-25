@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin.commands;
+package me.meta1203.plugins.monacoin.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

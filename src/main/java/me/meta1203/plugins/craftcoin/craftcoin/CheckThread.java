@@ -1,15 +1,15 @@
-package me.meta1203.plugins.craftcoin.craftcoin;
+package me.meta1203.plugins.monacoin.monacoin;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.litecoin.store.BlockStoreException;
+import com.google.monacoin.core.*;
+import com.google.monacoin.core.TransactionConfidence.ConfidenceType;
+import com.google.monacoin.store.BlockStoreException;
 
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import me.meta1203.plugins.craftcoin.Util;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import me.meta1203.plugins.monacoin.Util;
 
 public class CheckThread extends Thread {
 	private List<Transaction> toCheck = new ArrayList<Transaction>();
@@ -18,13 +18,13 @@ public class CheckThread extends Thread {
 	private int confirmations = 0;
 
 	public CheckThread(int wait, int confirmations) {
-		Craftcoinish.log.info("Checking for " + Integer.toString(confirmations) + " confirmations every " + Integer.toString(wait) + " seconds.");
+		Monacoinish.log.info("Checking for " + Integer.toString(confirmations) + " confirmations every " + Integer.toString(wait) + " seconds.");
 		waitTime = wait;
 		this.confirmations = confirmations;
 		List<Transaction> toAdd = Util.loadChecking();
-		Craftcoinish.log.info("Adding " + toAdd.size() + " old transactions to the check pool!");
+		Monacoinish.log.info("Adding " + toAdd.size() + " old transactions to the check pool!");
 		for (Transaction current : toAdd) {
-			Craftcoinish.log.info("Added: " + current.getHashAsString());
+			Monacoinish.log.info("Added: " + current.getHashAsString());
 			toCheck.add(current);
 		}
 	}
@@ -44,7 +44,7 @@ public class CheckThread extends Thread {
 
 	public synchronized void addCheckTransaction(Transaction tx) {
 		toCheck.add(tx);
-		Craftcoinish.log.warning("Added transaction " + tx.getHashAsString() + " to check pool!");
+		Monacoinish.log.warning("Added transaction " + tx.getHashAsString() + " to check pool!");
 	}
 
 	public synchronized void serialize() {
@@ -55,24 +55,24 @@ public class CheckThread extends Thread {
 
 	private void check() {
 		synchronized (this) {
-			Craftcoinish.log.info("Checking 1"); 
+			Monacoinish.log.info("Checking 1"); 
 			List<Transaction> toRemove = new ArrayList<Transaction>();
 			for (Transaction current : toCheck) {
 				
 				
-				Transaction currents = Craftcoinish.bapi.getWallet().getTransaction(current.getHash());
+				Transaction currents = Monacoinish.bapi.getWallet().getTransaction(current.getHash());
 			
 				if (!currents.getConfidence().getConfidenceType().equals(ConfidenceType.BUILDING)) {
-					Craftcoinish.log.info("Still building");
+					Monacoinish.log.info("Still building");
 					continue;
 				}
 				int conf = currents.getConfidence().getDepthInBlocks();
-				Craftcoinish.log.info(conf + " CONFIRMS");
+				Monacoinish.log.info(conf + " CONFIRMS");
 				if (conf >= confirmations) {
-						double value = Craftcoinish.econ.bitcoinToInGame(currents.getValueSentToMe(Craftcoinish.bapi.getWallet()));
+						double value = Monacoinish.econ.bitcoinToInGame(currents.getValueSentToMe(Monacoinish.bapi.getWallet()));
 						List<Address> receivers = null;
 						try {
-							Craftcoinish.log.info(currents.getOutputs().toString());
+							Monacoinish.log.info(currents.getOutputs().toString());
 							receivers = Util.getContainedAddress(currents.getOutputs());
 						
 						} catch (ScriptException e) {
@@ -82,11 +82,11 @@ public class CheckThread extends Thread {
 						
 						for (Address x : receivers) {
 							String pName = Util.searchAddress(x);
-							Craftcoinish.econ.addFunds(pName, value);
-							Craftcoinish.log.warning("Added " + Craftcoinish.econ.formatValue(value, true) + " to " + pName + "!");
+							Monacoinish.econ.addFunds(pName, value);
+							Monacoinish.log.warning("Added " + Monacoinish.econ.formatValue(value, true) + " to " + pName + "!");
 						}
 						
-						Craftcoinish.bapi.saveWallet();
+						Monacoinish.bapi.saveWallet();
 					toRemove.add(currents);
 				}
 			}

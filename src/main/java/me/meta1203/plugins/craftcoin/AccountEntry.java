@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin;
+package me.meta1203.plugins.monacoin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +46,7 @@ public class AccountEntry {
 		return this.amount;
 	}
 	
-	// Craftcoin Address
+	// Monacoin Address
 	
 	public String getAddr() {
 		return addr;

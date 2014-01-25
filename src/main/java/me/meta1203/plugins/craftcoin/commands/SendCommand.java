@@ -1,20 +1,20 @@
-package me.meta1203.plugins.craftcoin.commands;
+package me.meta1203.plugins.monacoin.commands;
 
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import me.meta1203.plugins.craftcoin.Util;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import me.meta1203.plugins.monacoin.Util;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.meta1203.plugins.craftcoin.commands.CommandUtil.*;
+import static me.meta1203.plugins.monacoin.commands.CommandUtil.*;
 
 public class SendCommand implements CommandExecutor {
 
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2,
 			String[] arg3) {
-		if (!arg0.hasPermission("craftcoin.transact")) {
+		if (!arg0.hasPermission("monacoin.transact")) {
 			error("You do not have permission for this command!", arg0);
 			return true;
 		}
@@ -39,9 +39,9 @@ public class SendCommand implements CommandExecutor {
 			error("Amount must be a number!", arg0);
 			return true;
 		}
-		if (Craftcoinish.econ.hasMoney(player.getName(), amount) && amount > 0) {
-			Craftcoinish.econ.transact(player.getName(), arg3[0], amount);
-			action("Sucessfully sent " + Craftcoinish.econ.formatValue(amount, true) + " to " +
+		if (Monacoinish.econ.hasMoney(player.getName(), amount) && amount > 0) {
+			Monacoinish.econ.transact(player.getName(), arg3[0], amount);
+			action("Sucessfully sent " + Monacoinish.econ.formatValue(amount, true) + " to " +
 					arg3[0] + "!", arg0);
 		} else {
 			error("Invalid amount to send!", arg0);

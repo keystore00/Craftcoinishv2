@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin;
+package me.meta1203.plugins.monacoin;
 
 import java.math.BigInteger;
 
@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 
 public class SatoshisEconAPI  {
 
-	public final double minCurrFee = 0.0005 * Craftcoinish.mult;
+	public final double minCurrFee = 0.0005 * Monacoinish.mult;
 	public boolean buyerorseller = true;
 	
 	public void setFunds(String accName, double value) {
@@ -32,37 +32,37 @@ public class SatoshisEconAPI  {
 	}
 	
 	public double priceOfTax(double traded) {
-		return traded * (Craftcoinish.tax/100);
+		return traded * (Monacoinish.tax/100);
 	}
 	
 	public void transact(String playerFrom, String playerTo, double value) {
-		if (Craftcoinish.salesTax) {
+		if (Monacoinish.salesTax) {
 			double tax = priceOfTax(value);
-			if (Craftcoinish.buyerorseller) {
+			if (Monacoinish.buyerorseller) {
 				subFunds(playerFrom, value+tax);
 				addFunds(playerTo, value);
 			} else {
 				subFunds(playerFrom, value);
 				addFunds(playerTo, value-tax);
 			}
-			addFunds(Craftcoinish.owner, tax);
+			addFunds(Monacoinish.owner, tax);
 		} else {
 			subFunds(playerFrom, value);
 			addFunds(playerTo, value);
 		}
 		
-		Craftcoinish.log.info("Transaction took place!");
-		Craftcoinish.log.info(playerFrom + " paid " + playerTo + ": " + formatValue(value, true));
+		Monacoinish.log.info("Transaction took place!");
+		Monacoinish.log.info(playerFrom + " paid " + playerTo + ": " + formatValue(value, true));
 	}
 	
 	public void transferTax(double value) {
-		addFunds(Craftcoinish.owner, priceOfTax(value));
+		addFunds(Monacoinish.owner, priceOfTax(value));
 	}
 	
 	public String formatValue(double value, boolean exact) {
 		if (exact)
 			value = Util.roundTo(value, 2);
-		return value + " " + Craftcoinish.currencyName;
+		return value + " " + Monacoinish.currencyName;
 	}
 	
 	public String listMoney(String player) {
@@ -91,10 +91,10 @@ public class SatoshisEconAPI  {
 	}
 	
 	public BigInteger inGameToBitcoin(double amount) {
-		return BigInteger.valueOf((long)(amount * Math.pow(10, 8)/Craftcoinish.mult));
+		return BigInteger.valueOf((long)(amount * Math.pow(10, 8)/Monacoinish.mult));
 	}
 	
 	public double bitcoinToInGame(BigInteger amount) {
-		return (amount.longValue() / Math.pow(10, 8)) * Craftcoinish.mult;
+		return (amount.longValue() / Math.pow(10, 8)) * Monacoinish.mult;
 	}
 }
