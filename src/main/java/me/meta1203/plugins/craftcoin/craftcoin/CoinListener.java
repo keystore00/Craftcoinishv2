@@ -1,15 +1,15 @@
-package me.meta1203.plugins.craftcoin.craftcoin;
+package me.meta1203.plugins.monacoin.monacoin;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import me.meta1203.plugins.craftcoin.Util;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import me.meta1203.plugins.monacoin.Util;
 
-import com.google.litecoin.core.*;
-import com.google.litecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.litecoin.store.BlockStoreException;
-import com.google.litecoin.core.Address;
+import com.google.monacoin.core.*;
+import com.google.monacoin.core.TransactionConfidence.ConfidenceType;
+import com.google.monacoin.store.BlockStoreException;
+import com.google.monacoin.core.Address;
 
 
 public class CoinListener extends AbstractWalletEventListener {
@@ -19,11 +19,11 @@ public class CoinListener extends AbstractWalletEventListener {
 			BigInteger prevBalance, BigInteger newBalance) {
 		
 		
-		BigInteger CRCAdded = newBalance.subtract(prevBalance); 
-		BigInteger CRCAddedc = BigInteger.ZERO;
-		if(CRCAdded.compareTo(CRCAddedc) != -1)
+		BigInteger MONAAdded = newBalance.subtract(prevBalance); 
+		BigInteger MONAAddedc = BigInteger.ZERO;
+		if(MONAAdded.compareTo(MONAAddedc) != -1)
 		{
-				Craftcoinish.checker.addCheckTransaction(tx);
+				Monacoinish.checker.addCheckTransaction(tx);
 		}
 		
 		

@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin.craftcoin;
+package me.meta1203.plugins.monacoin.monacoin;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,13 +15,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import com.avaje.ebean.Ebean;
-import com.google.litecoin.core.*;
-import com.google.litecoin.core.TransactionConfidence.ConfidenceType;
-import com.google.litecoin.store.BlockStoreException;
+import com.google.monacoin.core.*;
+import com.google.monacoin.core.TransactionConfidence.ConfidenceType;
+import com.google.monacoin.store.BlockStoreException;
 
-import me.meta1203.plugins.craftcoin.AuctionEntry;
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import me.meta1203.plugins.craftcoin.Util;
+import me.meta1203.plugins.monacoin.AuctionEntry;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import me.meta1203.plugins.monacoin.Util;
 
 public class AuctionsThread extends Thread {
 	private List<Transaction> toCheck = new ArrayList<Transaction>();
@@ -51,9 +51,9 @@ public class AuctionsThread extends Thread {
 
 	private void checkauctions() {
 		synchronized (this) {
-			Craftcoinish.log.info("Checking 2"); 
+			Monacoinish.log.info("Checking 2"); 
 			String returns = "";
-				Craftcoinish p = (Craftcoinish)Bukkit.getPluginManager().getPlugin("Craftcoinish");
+				Monacoinish p = (Monacoinish)Bukkit.getPluginManager().getPlugin("Monacoinish");
 
 			returns = "Items Found:";
 			List<AuctionEntry> ae = p.getDatabase().find(AuctionEntry.class).where().isNotNull("id").findList();
@@ -61,7 +61,7 @@ public class AuctionsThread extends Thread {
 			for (AuctionEntry x : ae) {
 				int xx = (int) (System.currentTimeMillis()/100 - x.getStarted());
 			
-				if(xx < 86400*Craftcoinish.auction_days)
+				if(xx < 86400*Monacoinish.auction_days)
 				{
 					try
 					{

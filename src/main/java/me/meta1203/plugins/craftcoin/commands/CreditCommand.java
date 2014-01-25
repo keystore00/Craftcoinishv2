@@ -1,13 +1,13 @@
-package me.meta1203.plugins.craftcoin.commands;
+package me.meta1203.plugins.monacoin.commands;
 
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import me.meta1203.plugins.craftcoin.Util;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import me.meta1203.plugins.monacoin.Util;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import static me.meta1203.plugins.craftcoin.commands.CommandUtil.*;
+import static me.meta1203.plugins.monacoin.commands.CommandUtil.*;
 
 /**
  * A command that lets admins assign orphaned BTC in the wallet to player accounts.
@@ -37,8 +37,8 @@ public class CreditCommand implements CommandExecutor {
 			return true;
 		}
 		if (amount > 0) {
-			Craftcoinish.econ.addFunds(arg3[0], amount);
-			action("Sucessfully credited " + Craftcoinish.econ.formatValue(amount, true) + " to " +
+			Monacoinish.econ.addFunds(arg3[0], amount);
+			action("Sucessfully credited " + Monacoinish.econ.formatValue(amount, true) + " to " +
 					arg3[0] + "!", arg0);
 		} else {
 			error("Invalid amount to credit!", arg0);

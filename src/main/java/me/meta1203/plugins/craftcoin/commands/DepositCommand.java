@@ -1,21 +1,21 @@
-package me.meta1203.plugins.craftcoin.commands;
+package me.meta1203.plugins.monacoin.commands;
 
-import me.meta1203.plugins.craftcoin.Util;
-import static me.meta1203.plugins.craftcoin.commands.CommandUtil.*;
+import me.meta1203.plugins.monacoin.Util;
+import static me.meta1203.plugins.monacoin.commands.CommandUtil.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.google.litecoin.core.Address;
+import com.google.monacoin.core.Address;
 
 
 public class DepositCommand implements CommandExecutor {
 
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2,
 			String[] arg3) {
-		if (!arg0.hasPermission("craftcoin.deposit")) {
+		if (!arg0.hasPermission("monacoin.deposit")) {
 			error("You do not have permission for this command!", arg0);
 			return true;
 		}
@@ -25,7 +25,7 @@ public class DepositCommand implements CommandExecutor {
 			String name = player.getName();
 			Address alloc = Util.parseAddress(Util.loadAccount(name).getAddr());
 			info("Send Bitcoin to the following address: ", arg0);
-			info("http://" + alloc.toString() + ".crc", arg0);
+			info("http://" + alloc.toString() + ".mona", arg0);
 			info("This address is yours forever. \nAdd it to your address book if need-be.", arg0);
 		}
 		return true;

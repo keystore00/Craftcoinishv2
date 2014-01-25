@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin;
+package me.meta1203.plugins.monacoin;
 
 import java.util.List;
 
@@ -6,13 +6,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class Auctions {
-	public static Craftcoinish plugin;
+	public static Monacoinish plugin;
 	
 	public String search(String name) {
 		String returns = "";
 		if (plugin == null) {
-			Plugin p = Bukkit.getPluginManager().getPlugin("Craftcoinish");
-			plugin = (Craftcoinish) p;
+			Plugin p = Bukkit.getPluginManager().getPlugin("Monacoinish");
+			plugin = (Monacoinish) p;
 		}
 		returns = "Items Found:";
 		List<AuctionEntry> ae = plugin.getDatabase().find(AuctionEntry.class).where().ieq("itemname", name).findList();
@@ -25,8 +25,8 @@ public class Auctions {
 	public AuctionEntry searchid(String name) {
 		String returns = "";
 		if (plugin == null) {
-			Plugin p = Bukkit.getPluginManager().getPlugin("Craftcoinish");
-			plugin = (Craftcoinish) p;
+			Plugin p = Bukkit.getPluginManager().getPlugin("Monacoinish");
+			plugin = (Monacoinish) p;
 		}
 		returns = "Items Found:";
 		List<AuctionEntry> ae = plugin.getDatabase().find(AuctionEntry.class).where().ieq("id", name).findList();
@@ -39,8 +39,8 @@ public class Auctions {
 	public void saveAuction(AuctionEntry ae)
 	{		
 		if (plugin == null) {
-			Plugin p = Bukkit.getPluginManager().getPlugin("Craftcoinish");
-			plugin = (Craftcoinish) p;
+			Plugin p = Bukkit.getPluginManager().getPlugin("Monacoinish");
+			plugin = (Monacoinish) p;
 		}
 		plugin.getDatabase().save(ae);
 	}

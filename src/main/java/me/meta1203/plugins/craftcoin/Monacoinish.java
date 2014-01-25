@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin;
+package me.meta1203.plugins.monacoin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.logging.Logger;
 
 import javax.persistence.PersistenceException;
 
-import me.meta1203.plugins.craftcoin.commands.*;
-import me.meta1203.plugins.craftcoin.craftcoin.AuctionsThread;
-import me.meta1203.plugins.craftcoin.craftcoin.CheckThread;
-import me.meta1203.plugins.craftcoin.craftcoin.CraftcoinAPI;
-import me.meta1203.plugins.craftcoin.database.DatabaseScanner;
-import me.meta1203.plugins.craftcoin.database.SystemCheckThread;
+import me.meta1203.plugins.monacoin.commands.*;
+import me.meta1203.plugins.monacoin.monacoin.AuctionsThread;
+import me.meta1203.plugins.monacoin.monacoin.CheckThread;
+import me.meta1203.plugins.monacoin.monacoin.MonacoinAPI;
+import me.meta1203.plugins.monacoin.database.DatabaseScanner;
+import me.meta1203.plugins.monacoin.database.SystemCheckThread;
 
 
 import org.bukkit.Bukkit;
@@ -37,9 +37,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.block.SignChangeEvent;
-import com.google.litecoin.core.NetworkParameters;
+import com.google.monacoin.core.NetworkParameters;
 import org.bukkit.inventory.ItemStack;
-public class Craftcoinish extends JavaPlugin implements Listener {
+public class Monacoinish extends JavaPlugin implements Listener {
 	// Plugin
 	public static int auction_days = 2;
 	public static String owner = "";
@@ -50,7 +50,7 @@ public class Craftcoinish extends JavaPlugin implements Listener {
 	public static double mult = 0;
 	public static int confirms = 2;
 	public static double minWithdraw = 0;
-	public static CraftcoinAPI bapi = null;
+	public static MonacoinAPI bapi = null;
 	public static CheckThread checker = null;
 	public static Logger log = null;
 	public static SatoshisEconAPI econ = null;
@@ -71,31 +71,42 @@ public class Craftcoinish extends JavaPlugin implements Listener {
     	FileConfiguration config = getConfig();
     	config.options().copyDefaults(true);
     	saveConfig();
-    	owner = config.getString("craftcoinish.owner");
-    	currencyName = config.getString("craftcoinish.currency-name");
-    	tax = config.getDouble("craftcoinish.tax");
+    	owner = config.getString("monacoinish.owner");
+    	currencyName = config.getString("monacoinish.currency-name");
+    	tax = config.getDouble("monacoinish.tax");
     	
-    	buyerorseller = config.getBoolean("craftcoinish.is-buyer-responsible");
-    	salesTax = config.getBoolean("craftcoinish.sales-tax");
-    	minWithdraw = config.getDouble("craftcoin.min-withdraw");
-    	mult = config.getDouble("craftcoinish.multiplier");
+    	buyerorseller = config.getBoolean("monacoinish.is-buyer-responsible");
+    	salesTax = config.getBoolean("monacoinish.sales-tax");
+    	minWithdraw = config.getDouble("monacoin.min-withdraw");
+    	mult = config.getDouble("monacoinish.multiplier");
     	network = NetworkParameters.prodNet();
-    	confirms = config.getInt("craftcoin.confirms");
+    	confirms = config.getInt("monacoin.confirms");
     	auction_days = config.getInt("auction.days");
     	// Config loading done!
     	log.info("Satoshis configuration loaded.");
     	auc = new Auctions();
-    	checker = new CheckThread(config.getInt("craftcoin.check-interval"), confirms);
+    	checker = new CheckThread(config.getInt("monacoin.check-interval"), confirms);
+	log.info("new checker");
     	auctions_thread = new AuctionsThread();
+	log.info("new auctionthread");
     	syscheck = new SystemCheckThread(config.getInt("self-check.delay"), config.getBoolean("self-check.startup"));
+	log.info("new syscheck");
     	econ = new SatoshisEconAPI();
+	log.info("new satoshieseconapi");
     	econ.buyerorseller = buyerorseller;
-    	bapi = new CraftcoinAPI();
+	log.info("buyerorseller");
+    	bapi = new MonacoinAPI();
+	log.info("new monaconapi");
     	scanner = new DatabaseScanner(this);
+	log.info("new databasescanner");
     	checker.start();
+	log.info("checker start");
     	syscheck.start();
+	log.info("syscheck start");
     	auctions_thread.start();
+	log.info("auctionthread start");
         getServer().getPluginManager().registerEvents(this, this);
+	log.info("register");
         this.getCommand("deposit").setExecutor(new DepositCommand());
         this.getCommand("withdraw").setExecutor(new WithdrawCommand());
         this.getCommand("money").setExecutor(new MoneyCommand());
@@ -103,7 +114,7 @@ public class Craftcoinish extends JavaPlugin implements Listener {
         this.getCommand("transact").setExecutor(new SendCommand());
         this.getCommand("credit").setExecutor(new CreditCommand());
         this.getCommand("debit").setExecutor(new DebitCommand());
-        this.getCommand("craftcoin").setExecutor(new AdminCommand());
+        this.getCommand("monacoin").setExecutor(new AdminCommand());
         this.getCommand("auction").setExecutor(new AuctionsCommand());
         try {
             Metrics metrics = new Metrics(this);
@@ -112,6 +123,7 @@ public class Craftcoinish extends JavaPlugin implements Listener {
         } catch (IOException e) {
         	log.info("Metrics disabled.");
         }
+	log.info("End onEnabled");
     
     }
 

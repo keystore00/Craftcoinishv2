@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin;
+package me.meta1203.plugins.monacoin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -117,7 +117,7 @@ public class AuctionEntry {
 	
 	public void buy()
 	{
-		Craftcoinish.econ.addFunds(this.Owner, this.buyout);
+		Monacoinish.econ.addFunds(this.Owner, this.buyout);
 	}
 
 	

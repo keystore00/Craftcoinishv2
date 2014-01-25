@@ -1,8 +1,8 @@
 author: meta1203
 database: true
-main: me.meta1203.plugins.craftcoin.Craftcoinish
-name: Craftcoinish
-url: http://www.craftcoin.net/
+main: me.meta1203.plugins.monacoin.Monacoinish
+name: Monacoinish
+url: http://www.monacoin.net/
 softdepend: [Vault]
 load: startup
 version: '1.0'
@@ -15,7 +15,7 @@ commands:
     description: 'Withdraw money to a Bitcoin address'
   transact:
     description: 'Send in-game money to player'
-  craftcoin:
+  monacoin:
     description: 'Print testing info'
   syscheck:
     description: 'Check Satoshis system health'
@@ -26,25 +26,25 @@ commands:
   auction:
     description: 'In-Game auction controller.'
 permissions:
-  craftcoin.admin:
+  monacoin.admin:
     description: 'Permission for Satoshis /satoshis'
-  craftcoin.withdraw:
+  monacoin.withdraw:
     description: 'Permission for Satoshis /withdraw'
     default: 'true'
-  craftcoin.deposit:
+  monacoin.deposit:
     description: 'Permission for Satoshis /deposit'
     default: 'true'
-  craftcoin.transact:
+  monacoin.transact:
     description: 'Permission for Satoshis /transact'
-  craftcoin.money:
+  monacoin.money:
     description: 'Permission for Satoshis /money'
     default: 'true'
-  craftcoin.info:
+  monacoin.info:
     description: 'Permission for Satoshis /syscheck'
-  craftcoin.credit:
+  monacoin.credit:
     description: 'Permission for Satoshis /credit'
-  craftcoin.debit:
+  monacoin.debit:
     description: 'Permission for Satoshis /debit'
-  craftcoin.auction:
+  monacoin.auction:
     description: 'Permissions for Satoshis /auction'
     default: 'true'

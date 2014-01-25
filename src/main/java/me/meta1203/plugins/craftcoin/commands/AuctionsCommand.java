@@ -1,11 +1,11 @@
-package me.meta1203.plugins.craftcoin.commands;
+package me.meta1203.plugins.monacoin.commands;
 
 import java.math.BigInteger;
 import java.util.Set;
 
-import me.meta1203.plugins.craftcoin.AuctionEntry;
-import me.meta1203.plugins.craftcoin.Craftcoinish;
-import static me.meta1203.plugins.craftcoin.commands.CommandUtil.*;
+import me.meta1203.plugins.monacoin.AuctionEntry;
+import me.meta1203.plugins.monacoin.Monacoinish;
+import static me.meta1203.plugins.monacoin.commands.CommandUtil.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,10 +23,10 @@ import com.lambdaworks.jni.Platform.OS;
 
 
 public class AuctionsCommand implements CommandExecutor {
-	public static Craftcoinish plugin;
+	public static Monacoinish plugin;
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2,
 			String[] arg3) {
-		if (!arg0.hasPermission("craftcoin.admin")) {
+		if (!arg0.hasPermission("monacoin.admin")) {
 			error("You do not have permission for this command!", arg0);
 			return true;
 		}
@@ -34,18 +34,18 @@ public class AuctionsCommand implements CommandExecutor {
 		{
 			if(arg3[0].equalsIgnoreCase("bid"))
 			{
-				AuctionEntry auc = Craftcoinish.auc.searchid( arg3[1] );
-				if(Double.parseDouble(arg3[2]) > auc.getPrice() && Double.parseDouble(arg3[2]) <= Craftcoinish.econ.getMoney(arg0.getName()))
+				AuctionEntry auc = Monacoinish.auc.searchid( arg3[1] );
+				if(Double.parseDouble(arg3[2]) > auc.getPrice() && Double.parseDouble(arg3[2]) <= Monacoinish.econ.getMoney(arg0.getName()))
 				{
 					auc.setPrice(Double.parseDouble(arg3[2]));
 					auc.setBidder(arg0.getName());
 					if (plugin == null) {
-						Plugin p = Bukkit.getPluginManager().getPlugin("Craftcoinish");
-						plugin = (Craftcoinish) p;
+						Plugin p = Bukkit.getPluginManager().getPlugin("Monacoinish");
+						plugin = (Monacoinish) p;
 						error("You have successfully bid " + arg3[2], arg0);
 					}
 					plugin.getDatabase().save(auc);
-					Craftcoinish.econ.subFunds(auc.getOwner(),auc.getPrice() - Craftcoinish.econ.priceOfTax(auc.getPrice()));
+					Monacoinish.econ.subFunds(auc.getOwner(),auc.getPrice() - Monacoinish.econ.priceOfTax(auc.getPrice()));
 				}
 				else
 				{
@@ -69,15 +69,15 @@ public class AuctionsCommand implements CommandExecutor {
 		{
 			if(arg3[0].equalsIgnoreCase("buy"))
 			{
-				AuctionEntry auc = Craftcoinish.auc.searchid( arg3[1] );
-				if(auc.getBuyout() <= Craftcoinish.econ.getMoney(arg0.getName()))
+				AuctionEntry auc = Monacoinish.auc.searchid( arg3[1] );
+				if(auc.getBuyout() <= Monacoinish.econ.getMoney(arg0.getName()))
 				{
 					
 					if (plugin == null) {
-						Plugin p = Bukkit.getPluginManager().getPlugin("Craftcoinish");
-						plugin = (Craftcoinish) p;
+						Plugin p = Bukkit.getPluginManager().getPlugin("Monacoinish");
+						plugin = (Monacoinish) p;
 					}
-					Craftcoinish.econ.subFunds(arg0.getName(),auc.getBuyout() - Craftcoinish.econ.priceOfTax(auc.getPrice()));
+					Monacoinish.econ.subFunds(arg0.getName(),auc.getBuyout() - Monacoinish.econ.priceOfTax(auc.getPrice()));
 					Bukkit.getPlayer(arg0.getName()).sendMessage(ChatColor.RED + "You have won the auction ");
 					ItemStack sx = new ItemStack(Material.matchMaterial(auc.getItemname()), auc.getStack());
 					Bukkit.getPlayer(arg0.getName()).getInventory().addItem(sx);
@@ -92,7 +92,7 @@ public class AuctionsCommand implements CommandExecutor {
 			
 			if(arg3[0].equalsIgnoreCase("search"))
 			{
-				arg0.sendMessage(Craftcoinish.auc.search( arg3[1] ));
+				arg0.sendMessage(Monacoinish.auc.search( arg3[1] ));
 				return true;
 			}
 			if(arg3[0].equalsIgnoreCase("create"))
@@ -109,8 +109,8 @@ public class AuctionsCommand implements CommandExecutor {
 				ae.setStack(play.getItemInHand().getAmount());
 				
 				if (plugin == null) {
-					Plugin p = Bukkit.getPluginManager().getPlugin("Craftcoinish");
-					plugin = (Craftcoinish) p;
+					Plugin p = Bukkit.getPluginManager().getPlugin("Monacoinish");
+					plugin = (Monacoinish) p;
 				}
 				plugin.getDatabase().save(ae);
 				

@@ -1,4 +1,4 @@
-package me.meta1203.plugins.craftcoin.database;
+package me.meta1203.plugins.monacoin.database;
 
 import org.bukkit.ChatColor;
 
