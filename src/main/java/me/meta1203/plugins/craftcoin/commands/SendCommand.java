@@ -3,6 +3,7 @@ package me.meta1203.plugins.monacoin.commands;
 import me.meta1203.plugins.monacoin.Monacoinish;
 import me.meta1203.plugins.monacoin.Util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,6 +44,7 @@ public class SendCommand implements CommandExecutor {
 			Monacoinish.econ.transact(player.getName(), arg3[0], amount);
 			action("Sucessfully sent " + Monacoinish.econ.formatValue(amount, true) + " to " +
 					arg3[0] + "!", arg0);
+			Bukkit.getServer().broadcastMessage(arg0 + " sent " + Monacoinish.econ.formatValue(amount, true) + " to " + arg3[0] + "!");
 		} else {
 			error("Invalid amount to send!", arg0);
 		}

@@ -131,7 +131,7 @@ public class MonacoinAPI {
         localWallet.saveToFile(new File("plugins/Monacoinish/wallet.wallet"));
     }
 	
-    public boolean localSendCoins(Address a, double value) {
+    public double localSendCoins(Address a, double value) {
         BigInteger sendAmount = Monacoinish.econ.inGameToBitcoin(value);
         
         Wallet.SendRequest request = Wallet.SendRequest.to(a, sendAmount);
@@ -141,7 +141,7 @@ public class MonacoinAPI {
 	    localWallet.completeTx(request);
 	} catch (InsufficientMoneyException e) {
 	    Monacoinish.log.warning("Insufficient money exception: " + request.tx.getHash());
-	    return false;
+	    return -1;
 	}
         localPeerGroup.broadcastTransaction(request.tx);
         try {
@@ -149,7 +149,7 @@ public class MonacoinAPI {
 		localWallet.completeTx(request);
 	    } catch (InsufficientMoneyException e) {
 		Monacoinish.log.warning("Insufficient money exception: " + request.tx.getHash());
-		return false;
+		return -1;
 	    }
 	    localPeerGroup.broadcastTransaction(request.tx);
 	    try {
@@ -159,11 +159,11 @@ public class MonacoinAPI {
 	    }
         } catch (IllegalArgumentException x){
 	    Monacoinish.log.warning("Illegal argument: " + request.tx.getHash());
-	    return false;
+	    return -1;
 	}
 	Monacoinish.log.warning("Sent transaction: " + request.tx.getHash());
 	saveWallet();
-	return true;
+	return Monacoinish.econ.bitcoinToInGame(request.tx.getValueSentFromMe(localWallet));
 
     }
 	
