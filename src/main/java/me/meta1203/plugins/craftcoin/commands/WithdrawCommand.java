@@ -37,7 +37,7 @@ public class WithdrawCommand implements CommandExecutor {
 						return true;
 					}
 					
-					if (!Monacoinish.econ.hasMoney(arg0.getName(), withdraw - Monacoinish.econ.priceOfTax(withdraw))) {
+					if (!Monacoinish.econ.hasMoney(arg0.getName(), withdraw + Monacoinish.econ.priceOfTax(withdraw))) {
 						error("Oops! You cannot withdraw more money than you have!", arg0);
 						return true;
 					}
@@ -45,7 +45,7 @@ public class WithdrawCommand implements CommandExecutor {
 
 
 					
-					Monacoinish.econ.subFunds(arg0.getName(), withdraw - Monacoinish.econ.priceOfTax(withdraw));
+					Monacoinish.econ.subFunds(arg0.getName(), withdraw + Monacoinish.econ.priceOfTax(withdraw));
 				} catch (WrongNetworkException e) {
 					error("Oops! That address was for the TestNet!", arg0);
 				} catch (AddressFormatException e) {
