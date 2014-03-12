@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.meta1203.plugins.monacoinish</groupId>
 	<artifactId>Monacoinish</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<name>Monacoinish</name>
 	<url>http://www.monacoin.net/</url>
 	<build>
@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>com.google</groupId>
 			<artifactId>monacoinj</artifactId>
-			<version>0.11-SNAPSHOT</version>
+			<version>0.12-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
