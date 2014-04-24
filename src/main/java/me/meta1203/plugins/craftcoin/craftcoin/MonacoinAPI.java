@@ -14,6 +14,8 @@ import com.google.monacoin.store.UnreadableWalletException;
 import com.google.monacoin.store.BlockStoreException;
 import com.google.monacoin.store.SPVBlockStore;
 import com.google.monacoin.core.AbstractPeerEventListener;
+import com.google.monacoin.params.MainNetParams;
+import com.google.monacoin.net.discovery.SeedPeers;
 import me.meta1203.plugins.monacoin.Monacoinish;
 
 public class MonacoinAPI {
@@ -76,14 +78,7 @@ public class MonacoinAPI {
         localPeerGroup = new PeerGroup(Monacoinish.network, localChain);
         localPeerGroup.setUserAgent("MonacoinBukkit", "0.2");
         localPeerGroup.addWallet(localWallet);
-        try {
-	    localPeerGroup.addAddress(new PeerAddress(InetAddress.getByName("133.242.51.93"), 9401));
-	    localPeerGroup.addAddress(new PeerAddress(InetAddress.getByName("133.242.19.247"), 9401));
-	    localPeerGroup.addAddress(new PeerAddress(InetAddress.getByName("87.98.237.180"), 9401));
-	} catch (UnknownHostException e) {
-	    Monacoinish.log.info("Unknown host exception");
-	    // TODO Auto-generated catch block
-	}
+	localPeerGroup.addPeerDiscovery(new SeedPeers(MainNetParams.get()));
         localPeerGroup.start();
 	Monacoinish.log.info("localpeerrgroup start");
 	try {
